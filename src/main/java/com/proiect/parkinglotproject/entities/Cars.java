@@ -15,16 +15,13 @@ public class Cars {
     private String parkingSpot;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @JoinColumn(name = "owner_id", nullable = false)
+    private User owner; // cheie primara in alt tabel
 
-    public User getUser() {
-        return user;
+    public User getOwner() {
+        return owner;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
 
     public Long getId() {
         return id;
@@ -38,15 +35,8 @@ public class Cars {
         return LicensePlate;
     }
 
-    public void setLicensePlate(String licensePlate) {
-        LicensePlate = licensePlate;
-    }
-
     public String getParkingSpot() {
         return parkingSpot;
     }
 
-    public void setParkingSpot(String parkingSpot) {
-        this.parkingSpot = parkingSpot;
-    }
 }

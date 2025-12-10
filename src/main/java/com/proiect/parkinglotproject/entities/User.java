@@ -18,8 +18,8 @@ public class User {
 
     private String password;
 
-    @OneToMany(mappedBy = "user", orphanRemoval = true)
-    private List<Cars> cars = new ArrayList<>();
+    @OneToMany(mappedBy = "owner", orphanRemoval = true)
+    private List<Cars> cars = new ArrayList<>(); // cars reprezinta alta tabela care este mapata prin id-ul owner
 
     private String email;
 
@@ -47,4 +47,11 @@ public class User {
         this.id = id;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }
