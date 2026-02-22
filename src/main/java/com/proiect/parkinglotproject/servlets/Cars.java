@@ -2,6 +2,7 @@ package com.proiect.parkinglotproject.servlets;
 
 import com.proiect.parkinglotproject.common.CarDto;
 import com.proiect.parkinglotproject.ejb.CarsBean;
+import jakarta.annotation.security.DeclareRoles;
 import jakarta.inject.Inject;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
@@ -11,6 +12,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+
+@DeclareRoles({"READ_CARS", "WRITE_CARS"})
+@ServletSecurity(
+        value = @HttpConstraint(rolesAllowed = {"READ_CARS"}),
+        httpMethodConstraints = {
+                @HttpMethodConstraint(value = "POST", rolesAllowed = {"WRITE_CARS"})
+        }
+)
 @WebServlet(name = "Cars", value = "/Cars")
 public class Cars extends HttpServlet {
 
@@ -29,16 +38,22 @@ public class Cars extends HttpServlet {
         request.getRequestDispatcher("/WEB-INF/Pages/cars.jsp").forward(request,response);
     }
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String[] carIdsAsString = request.getParameterValues("carIds");
+        String[] carIdsAsString = request.getParameterValues("car_ids");
         if(carIdsAsString != null){
             List<Long> carIds = new ArrayList<>();
             for(String carIdAsString : carIdsAsString){
-                carIds.add(Long.parseLong(carIdAsString));
-            }
-            carsBean.deleteCarsByIds(carIds);
 
+                {
+                    carIds.add(Long.parseLong(carIdAsString));
+                }
+                carsBean.deleteCarsByIds(carIds);
+
+            }
+            response.sendRedirect(request.getContextPath() + "/Cars");
         }
-        response.sendRedirect(request.getContextPath() + "/Cars");
-    }
+        }
+
+
 }
