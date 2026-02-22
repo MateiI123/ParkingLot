@@ -39,4 +39,15 @@ public class Cars {
         return parkingSpot;
     }
 
+    public void setLicensePlate(String licensePlate) {
+        LicensePlate = licensePlate;
+    }
+
+    public void setParkingSpot(String parkingSpot) {
+        this.parkingSpot = parkingSpot;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
 }
